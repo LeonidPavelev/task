@@ -1,0 +1,55 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1" author="LeonidPavelev">
+        <comment>Создание таболицы users</comment>
+        <sql>
+            create table users
+            (
+                id             uuid primary key,
+                first_name     text      not null,
+                last_name      text      not null,
+                second_name    text      not null,
+                address        text      not null,
+                position       text      not null,
+                create_instant timestamp not null,
+                update_instant timestamp not null,
+                delete_instant timestamp
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="2" author="LeonidPavelev">
+        <comment>Создание таболицы phones</comment>
+        <sql>
+            create table phones
+            (
+                id             uuid primary key,
+                number         text      not null,
+                type           text      not null,
+                create_instant timestamp not null,
+                update_instant timestamp not null,
+                delete_instant timestamp
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="3" author="LeonidPavelev">
+        <comment>Создание таболицы users_link_phones</comment>
+        <sql>
+            create table users_link_phones
+            (
+                id             uuid primary key,
+                user_id        uuid      not null references users (id),
+                phone_id       uuid      not null references phones (id),
+                create_instant timestamp not null,
+                update_instant timestamp not null,
+                delete_instant timestamp,
+                unique (user_id, phone_id)
+            );
+
+        </sql>
+    </changeSet>
+</databaseChangeLog>
